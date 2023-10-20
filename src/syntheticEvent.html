@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>合成事件原理</title>
+  <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+  <div id="root">
+    <div class="outer">
+      <div class="inner"></div>
+    </div>
+  </div>
+
+  <script>
+    const root = document.querySelector('#root')
+    const outer = document.querySelector('.outer')
+    const inner = document.querySelector('.inner')
+
+    // 经过视图渲染，outer/inner 上都会有 onXxx / onXxxCapture 这样的属性
+    outer.onClick = () => console.log('outer bubble')
+    outer.onClickCapture = () => console.log('outer capture')
+    inner.onClick = () => console.log('inner bubble')
+    inner.onClickCapture = () => console.log('inner capture')
+
+    // 给 #root 做事件绑定
+    root.addEventListener('click', e => {
+      console.log(e, 'capture')
+      let {path} = e  // path: 事件源 => ... => window
+      path.reverse().forEach(ele => {
+        let handle = ele.onClickCapture
+        if (handle) handle()
+      })
+    }, true)
+    root.addEventListener('click', e => {
+      console.log(e, 'bubble')
+      let {path} = e
+      path.forEach(ele => {
+        let handle = ele.onClick
+        if (handle) handle()
+      })
+    }, false)
+  </script>
+</body>
+</html>

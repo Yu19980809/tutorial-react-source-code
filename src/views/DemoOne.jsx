@@ -1,54 +1,37 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-const DemoOne = (props) => {
-  let {title, data, children} = props
+class DemoOne extends React.Component {
+  handleClick1() {
+    console.log(this) // 输出undefined
+  }
 
-  // 对children做类型处理
-  // 可以基于 React.Children 对象中提供的方法，对 props.children 做处理
-  // 例如：count / forEach / mao / toArray ...
-  children = React.Children.toArray(children)
-  let headerSlot = [],
-      footerSlot = [],
-      otherSlot = []
-  
-  children.forEach(child => {
-    let {slot} = child.props
-    if (slot === 'header') {
-      headerSlot.push(child)
-    } else if (slot === 'footer') {
-      footerSlot.push(child)
-    } else {
-      otherSlot.push(child)
-    }
-  })
+  handleClick2() {
+    console.log(this) // 输出 DemoOne 实例
+  }
 
-  return (
-    <>
-      {headerSlot}
-      <br />
+  handleClick3 = e => {
+    console.log(this) // 输出 DemoOne 实例
+    console.log(e)  // 输出合成事件对象（SyntheticBaseEvent）
+                    // 是React内部经过特殊处理，把各个浏览器的事件对象统一化后，构建的一个事件对象
+  }
 
-      <h2>{title}</h2>
-      <span>{data}</span>
+  render() {
+    return (
+      <div>
+        <button onClick={this.handleClick1}>
+          Undefined
+        </button>
 
-      <br />
-      {footerSlot}
-    </>
-  )
-}
+        <button onClick={this.handleClick2.bind(this)}>
+          Bind
+        </button>
 
-// 通过把函数当作对象，设置静态的私有属性方法，来给其设置属性的校验规则
-DemoOne.defaultProps = {
-  data: [888]
-}
-
-DemoOne.propTypes = {
-  title: PropTypes.string.isRequired, // 类型为字符串，且必传
-  data: PropTypes.number, // 类型为数字
-  x: PropTypes.oneOfType([  // 类型为数字和布尔值的其中一种
-    PropTypes.number,
-    PropTypes.bool
-  ])
+        <button onClick={this.handleClick3}>
+          Arrow
+        </button>
+      </div>
+    )
+  }
 }
 
 export default DemoOne
