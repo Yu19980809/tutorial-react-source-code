@@ -1,19 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-// import DemoOne from './views/DemoOne'
-// import VoteFunction from './views/VoteFunction'
-// import VoteClass from './views/VoteClass'
-// import DemoTwo from './views/DemoTwo'
-// import DemoThree from './views/DemoThree'
-// import DemoFour from './views/DemoFour'
-// import DemoFive from './views/DemoFive'
-import DemoSix from './views/DemoSix'
+import Demo from './views/Demo7'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
   <>
-    <DemoSix />
+    <Demo x={10} y={20} enable={true} />
   </>
 )
 
