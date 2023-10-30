@@ -12,7 +12,3 @@ export const isPlainObject = obj => {
 
   return Object.getPrototypeOf(obj) === proto;
 }
-
-export const randomString = () => {
-  return Math.random().toString(36).substring(7).split('').join('.');
-};
