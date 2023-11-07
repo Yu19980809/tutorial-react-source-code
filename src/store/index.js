@@ -1,17 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit'
-import reduxLogger from 'redux-logger'
-import reduxThunk from 'redux-thunk'
-import taskReducer from './features/taskSlice'
+import TaskStore from './taskStore'
+import PersonStore from './personTask'
 
-const store = configureStore({
-  // 指定 reducer
-  reducer: {
-    // 按模块管理各个切片
-    task: taskReducer
-  },
-  // 使用中间件 
-  // 如果未指定任何中间件,则默认集成了 reduxThunk
-  middleware: [reduxLogger, reduxThunk]
-})
+class Store {
+  constructor() {
+    this.task = new TaskStore(this)
+    this.person = new PersonStore(this)
+  }
+}
 
+const store = new Store()
 export default store

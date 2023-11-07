@@ -1,16 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { ConfigProvider } from 'antd'
+import { Provider } from 'mobx-react'
 import store from './store'
-import { Provider } from 'react-redux'
-import Demo from './views/Demo'
+import Task from './views/Task'
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
+const root =ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
-  <ConfigProvider>
-    <Provider store={store}>
-      <Demo />
-    </Provider>
-  </ConfigProvider>
+  // 基于 Provider 把各个版块的 Store 实例都放入到上下文中
+  <Provider {...store} task={store.task} person={store.person}>
+    <Task />
+  </Provider>
 )
